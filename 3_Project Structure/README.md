@@ -1,95 +1,69 @@
-## **3. Project Structure in Next.js (App Router)**
+Alright — I’ll format **Project Structure** notes in exactly that style so it matches what you’re asking for.
 
-When you create a Next.js project using the **App Router**, you’ll see something like this:
+---
+
+## **Folder Structure**
+
+Next.js folder structure is based on a **file-based routing system**, meaning the structure inside the `/pages` or `/app` directory determines the application’s routes automatically.
+When using the **App Router** (Next.js 13+), the basic structure looks like:
 
 ```
-my-app/
-│
-├── app/                # All your routes, layouts, pages, templates
-│   ├── page.tsx         # Home page route ("/")
-│   ├── layout.tsx       # Root layout (shared across all pages)
-│   ├── globals.css      # Global styles
-│   └── (other folders)  # Additional routes or route groups
-│
-├── public/              # Publicly accessible static files
-│   └── favicon.ico
-│
-├── node_modules/        # Installed packages
-│
-├── package.json         # Dependencies + scripts
-├── next.config.js       # Next.js configuration file
-├── tsconfig.json        # TypeScript configuration (if using TS)
-└── README.md
+nextjs-app-router/
+    src/                        // Optional folder for source code
+       app/                     // Root folder for App Router
+          counter/              // Folder for Counter Page
+             page.tsx
+          page.tsx
+       components/              // Reusable components
+       styles/                   // Global and module CSS files
+    public/                      // Static assets (images, fonts, etc.)
+    next.config.js               // Next.js configuration
+    package.json                 // Dependencies & scripts
+    tsconfig.json                // TypeScript configuration
+    middleware.ts                // Middleware logic
+    .env                         // Environment variables
+    .env.local                   // Local environment variables
+    .gitignore                   // Files ignored by git
 ```
 
 ---
 
-### **Important Folders & Files**
+### **Example Routes**
 
-#### **1. `app/`**
-
-* **Main routing folder** (App Router introduced in Next.js 13+).
-* Every folder inside represents a route.
-* A `page.tsx` file = the actual page content.
-* A `layout.tsx` file = shared UI wrapper for pages inside that folder.
-* Can also contain:
-
-  * `loading.tsx` → Loading state
-  * `error.tsx` → Error UI
-  * `template.tsx` → A fresh instance for each navigation
-  * `route.ts` → API endpoints
-
-#### **2. `public/`**
-
-* Stores static assets: images, icons, PDFs, etc.
-* Accessible via `/filename` in browser.
-* Example: `public/logo.png` → `/logo.png`.
-
-#### **3. `package.json`**
-
-* Lists dependencies (`next`, `react`, `react-dom`, etc.).
-* Contains scripts like:
-
-  ```json
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  }
-  ```
-
-#### **4. `next.config.js`**
-
-* Customize Next.js settings.
-* Example:
-
-  ```js
-  /** @type {import('next').NextConfig} */
-  const nextConfig = {
-    images: {
-      domains: ['example.com']
-    }
-  };
-  module.exports = nextConfig;
-  ```
+* `src/app/page.tsx` → Home page → **`localhost:3000/`**
+* `src/app/counter/page.tsx` → Counter page → **`localhost:3000/counter`**
 
 ---
 
-### **Routing Example**
+## **Top Level Folders**
 
-If you have:
+* **`/app`** → Root folder for the **App Router**. Contains routes, layouts, templates, and route handlers.
+* **`/pages`** → Root folder for the **Page Router** (older routing system, optional in new projects).
+* **`/public`** → Stores static files accessible directly via the browser.
+* **`/src`** → Optional; used to keep all source code organized and separate from config files.
+* **`/components`** → (Inside `src/`) Stores reusable UI components.
+* **`/styles`** → (Inside `src/`) Stores global styles and CSS modules.
 
-```
-app/
- ├── page.tsx         → "/"
- ├── about/
- │    └── page.tsx    → "/about"
- └── blog/
-      └── page.tsx    → "/blog"
-```
+---
 
-Next.js automatically creates routes:
+## **Top Level Files**
 
-* `/` → Home
-* `/about`
-* `/blog`
+* **`next.config.js`** → Next.js configuration file.
+* **`package.json`** → Contains project dependencies, scripts, and metadata.
+* **`tsconfig.json`** → TypeScript configuration file.
+* **`middleware.ts`** → Used to define middleware for handling requests.
+* **`.env`** → Environment variables for all environments.
+* **`.env.local`** → Environment variables for local development.
+* **`.gitignore`** → Files/folders ignored by Git.
+
+---
+
+## **Routing Files** (inside `/app` or `/pages`)
+
+* **`page.tsx`** → Defines the UI for a specific route.
+* **`layout.tsx`** → Shared layout (navbar, header, footer, etc.) for all nested pages.
+* **`loading.tsx`** → Loading UI for route transitions.
+* **`error.tsx`** → Error boundary for that route.
+* **`not-found.tsx`** → 404 page for missing routes.
+* **`template.tsx`** → Creates a new instance of the UI tree on navigation.
+* **`route.ts`** → API route handler (GET, POST, etc.) for backend logic.
